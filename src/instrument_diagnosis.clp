@@ -107,6 +107,33 @@
    (assert (spotlight (yes-or-no-p "Do you like the spotloght? (yes/no)? ")))
 )
 
+; Determine whether or not the user can sing
+; Asked if...
+; User wants to be a professional musician
+; User likes to make noise sometimes
+; User likes the spotlight
+(defrule determine-sing ""
+   (spotlight yes)
+   (not (instrumet ?))
+   =>
+   (assert (sing (yes-or-no-p "Can you sing? (yes/no)? ")))
+)
+
+; Determine what genre the user likes
+; Asked if...
+; User wants to be a professional musician
+; User wants to make noise sometimes
+; User does not like the spotlight
+(defrule determine-genre ""
+   (spotlight no)
+   (not (instrumet ?))
+   =>
+   (assert (genre
+      (ask-question "What genre? (rock/electronic/country)? "
+                    rock electronic country))
+	)
+)
+
 ;;;********************
 ;;;* INSTRUMENT RULES *
 ;;;********************
