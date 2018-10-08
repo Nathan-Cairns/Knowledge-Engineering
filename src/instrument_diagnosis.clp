@@ -247,6 +247,22 @@
    (assert (instrument "Acoustic Guitar"))
 )
 
+; User is not a team player reccomend guitar
+(defrule team-player-no-conclusion ""
+   (team-player no)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Guitar"))
+)
+
+; User is a team player reccomend bass
+(defrule team-player-yes-conclusion ""
+   (team-player yes)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Bass"))
+)
+
 ;;;********************************
 ;;;* STARTUP AND CONCLUSION RULES *
 ;;;********************************
