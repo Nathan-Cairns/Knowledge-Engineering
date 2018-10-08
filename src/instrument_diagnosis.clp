@@ -50,7 +50,7 @@
 ; Start rule, ask the user if they want to be a professional musician
 (defrule determine-instrument-goals ""
    (not (prof-musician ?))
-   (not (has-instrumet ?))
+   (not (instrumet ?))
    =>
    (assert (prof-musician (yes-or-no-p "Do you want to become a professional musician? (yes/no)? ")))
 )
@@ -62,9 +62,73 @@
    (not (instrumet ?))
    =>
    (assert (instrument-commitment
-      (ask-question "How committed are you to learning an instrument (very/midly/not)? "
+      (ask-question "How committed are you to learning an instrument (very/mildly/not)? "
                     very mildly not))
 	)
+)
+
+; Determine whether or not a user is okay with getting callusses
+; Asked if user does not want to be a professional musician and is very serious about learning an instrument.
+(defrule determine-callusses ""
+   (instrument-commitment very)
+   (not (instrumet ?))
+   =>
+   (assert (callusses (yes-or-no-p "Are you okay with getting callusses? (yes/no)? ")))
+)
+
+; Determine whether or not a user is a smoker
+; Asked if user does not want to be a professional musician and is mildly serious about learning an instrument.
+(defrule determine-smoker ""
+   (instrument-commitment mildly)
+   (not (instrumet ?))
+   =>
+   (assert (smoker (yes-or-no-p "Are you a smoker? (yes/no)? ")))
+)
+
+;;;********************
+;;;* INSTRUMENT RULES *
+;;;********************
+
+; All of the following rules adapted from the repair rules in auto.clp
+
+; User is okay with calluses reccomend guitar
+(defrule callusses-yes-conclusion ""
+   (callusses yes)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Guitar"))
+)
+
+; User is not okay with calluses reccomend piano
+(defrule callusses-no-conclusion ""
+   (callusses no)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Piano"))
+)
+
+; User is a smoker reccomend ukelele
+(defrule smoker-yes-conclusion ""
+   (smoker yes)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Ukelele"))
+)
+
+; User is no a smoker reccomend kazoo
+(defrule smoker-no-conclusion ""
+   (smoker no)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Kazoo"))
+)
+
+; User is not committed to learning an instrument reccomend kazoo
+(defrule commitment-not-conclusion ""
+   (instrument-commitment not)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Kazoo"))
 )
 
 ;;;********************************
