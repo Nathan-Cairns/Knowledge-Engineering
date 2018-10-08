@@ -68,7 +68,9 @@
 )
 
 ; Determine whether or not a user is okay with getting callusses
-; Asked if user does not want to be a professional musician and is very serious about learning an instrument.
+; Asked if...
+; User does not want to be a professional musician 
+; User is very serious about learning an instrument
 (defrule determine-callusses ""
    (instrument-commitment very)
    (not (instrumet ?))
@@ -77,7 +79,9 @@
 )
 
 ; Determine whether or not a user is a smoker
-; Asked if user does not want to be a professional musician and is mildly serious about learning an instrument.
+; Asked if...
+; User does not want to be a professional musician 
+; User is mildly serious about learning an instrument
 (defrule determine-smoker ""
    (instrument-commitment mildly)
    (not (instrumet ?))
@@ -87,7 +91,7 @@
 
 ; Determine whether if the user wants to make noise, does not want to make noise
 ; or sometimes wants to make noise
-; Asked if user does want to be a professional musician.
+; Asked if user does want to be a professional musician
 (defrule determine-noise ""
    (prof-musician yes)
    (not (instrumet ?))
@@ -99,7 +103,9 @@
 )
 
 ; Determine whether or not the user likes the spotlight
-; Asked if user wants to be a professional musician and sometimes wants to make a lot of noise
+; Asked if...
+; User wants to be a professional musician
+; User sometimes wants to make a lot of noise
 (defrule determine-spotlight ""
    (noise sometimes)
    (not (instrumet ?))
@@ -132,6 +138,19 @@
       (ask-question "What genre? (rock/electronic/country)? "
                     rock electronic country))
 	)
+)
+
+; Determine if user is a team player
+; Asked if...
+; User wants to be a professional musician
+; User wants to make noise sometimes
+; User does not like the spotlight
+; User likes Rock
+(defrule determine-team-player ""
+   (genre rock)
+   (not (instrumet ?))
+   =>
+   (assert (team-player (yes-or-no-p "Are you a team player? (yes/no)? ")))
 )
 
 ;;;********************
@@ -210,6 +229,22 @@
    (not (instrument ?))
    =>
    (assert (instrument "Guitar"))
+)
+
+; User likes electronic music reccomend synthesizer
+(defrule genre-electronic-conclusion ""
+   (genre electronic)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Synthesizer"))
+)
+
+; User likes country reccomend acoustic guitar
+(defrule genre-country-conclusion ""
+   (genre country)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Acoustic Guitar"))
 )
 
 ;;;********************************
