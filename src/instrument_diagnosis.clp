@@ -61,19 +61,10 @@
    (prof-musician no)
    (not (instrumet ?))
    =>
-   (assert (instrument-commitement
-      (ask-question "How committed are you to learning an instrument" (Very/Midly/Not)? "
+   (assert (instrument-commitment
+      (ask-question "How committed are you to learning an instrument (very/midly/not)? "
                     very mildly not))
 	)
-)
-
-; Determine what instrument user should play based on whether they want calluses or not
-; Asked if user is very committed to learning an instrument and does not want to be a professional musician
-(defrule determine-instrument-goals ""
-   (not (prof-musician ?))
-   (not (instrumet ?))
-   =>
-   (assert (prof-musician (yes-or-no-p "Do you want to become a professional musician? (yes/no)? ")))
 )
 
 ;;;********************************
@@ -86,7 +77,7 @@
   (declare (salience 10))
   =>
   (printout t crlf crlf)
-  (printout t "What Instrument Should I Learn? Expert System")
+  (printout t "What Instrument Should I Learn? - An Expert System.")
   (printout t crlf crlf))
 
 ; Print the instrument the user should learn
