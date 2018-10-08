@@ -85,6 +85,28 @@
    (assert (smoker (yes-or-no-p "Are you a smoker? (yes/no)? ")))
 )
 
+; Determine whether if the user wants to make noise, does not want to make noise
+; or sometimes wants to make noise
+; Asked if user does want to be a professional musician.
+(defrule determine-noise ""
+   (prof-musician yes)
+   (not (instrumet ?))
+   =>
+   (assert (noise
+      (ask-question "Do you want to make a lot of noise (yes/no/sometimes)? "
+                    yes no sometimes))
+	)
+)
+
+; Determine whether or not the user likes the spotlight
+; Asked if user wants to be a professional musician and sometimes wants to make a lot of noise
+(defrule determine-spotlight ""
+   (noise sometimes)
+   (not (instrumet ?))
+   =>
+   (assert (spotlight (yes-or-no-p "Do you like the spotloght? (yes/no)? ")))
+)
+
 ;;;********************
 ;;;* INSTRUMENT RULES *
 ;;;********************
@@ -129,6 +151,22 @@
    (not (instrument ?))
    =>
    (assert (instrument "Kazoo"))
+)
+
+; User wants to make a lot of noise reccomend drums
+(defrule noise-yes-conclusion ""
+   (noise yes)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Drums"))
+)
+
+; User does not want to make a lot of noise reccomend keyboard
+(defrule noise-no-conclusion ""
+   (noise no)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Keyboard"))
 )
 
 ;;;********************************
