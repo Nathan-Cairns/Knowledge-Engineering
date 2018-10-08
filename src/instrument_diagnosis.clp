@@ -196,6 +196,22 @@
    (assert (instrument "Keyboard"))
 )
 
+; User can sing reccomend singing
+(defrule sing-yes-conclusion ""
+   (sing yes)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Vocals"))
+)
+
+; User can't sing reccomend guitar
+(defrule sing-no-conclusion ""
+   (sing no)
+   (not (instrument ?))
+   =>
+   (assert (instrument "Guitar"))
+)
+
 ;;;********************************
 ;;;* STARTUP AND CONCLUSION RULES *
 ;;;********************************
